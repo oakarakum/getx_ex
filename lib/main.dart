@@ -1,8 +1,11 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:getx_ex/controller/getx_cont.dart';
+import 'package:getx_ex/controller/getx_lang.dart';
 import 'package:getx_ex/secondpage_screen.dart';
 
 void main() async {
@@ -18,7 +21,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      translations: Messages(),
       //get kullanırken sayfanın değişmesi için lazım.
+      locale: Get.deviceLocale, // cihazın diline göre yazılır
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -67,9 +72,15 @@ class MyHomePage extends StatelessWidget {
             ElevatedButton(
                 //Snackbar getiren buton
                 onPressed: () {
-                  Get.snackbar("title", "message");
+                  Get.snackbar("sayac", "message");
                 },
                 child: Text("Snack bar ")),
+            ElevatedButton(
+                //5 art
+                onPressed: () {
+                  controller.sayac5Arttir();
+                },
+                child: Text("5 arttır")),
             ElevatedButton(
                 //Get Dialog
                 onPressed: () {
@@ -81,7 +92,13 @@ class MyHomePage extends StatelessWidget {
                 onPressed: () {
                   controller.temadegistir();
                 },
-                child: Text("Tema değiştir ")),
+                child: Text("hello".tr)),
+            ElevatedButton(
+                //Tema değiştirme
+                onPressed: () {
+                  Get.updateLocale(Locale("tr", "TR"));
+                },
+                child: Text("dil".tr)),
             /*  Obx((() => Text(
                   '${_counter.value == 20 ? 2 : _counter}', //.value rtxint i int dönüştürüyor
                   style: Theme.of(context).textTheme.headline4,
@@ -101,12 +118,30 @@ class MyHomePage extends StatelessWidget {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), */
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          controller.sayacArttir(); //controller ile artırma
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              controller.sayacArttir(); //controller ile artırma
+            },
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              controller.sayac5Arttir(); //controller ile artırma
+            },
+            tooltip: 'fufu',
+            child: Center(
+              child: Text(
+                "5+ arttır",
+                style: TextStyle(fontSize: 10),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

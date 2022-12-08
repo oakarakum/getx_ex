@@ -37,6 +37,15 @@ class Controller extends GetxController {
     sayac.value = sayac.toInt() - 1;
   }
 
+  sayac5Arttir() {
+    deger.value = deger.toInt() + 5;
+    Get.snackbar("sayac", deger.toString());
+  }
+
+  sayac5Azalt() {
+    sayac.value = sayac.toInt() - 5;
+  }
+
   @override // initstate im aynısı
   void onInit() {
     print("ilk açiliş");
